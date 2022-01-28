@@ -2,15 +2,9 @@ import image from "./character-image.jpg";
 import { useLayoutEffect, useState } from "react";
 
 const Image = (props) => {
-  const unscaledCharacters = [
-    { name: "singed", top: 285, left: 725, height: 40, width: 25 },
-    { name: "twisted fate", top: 205, left: 527, height: 22, width: 25 },
-    { name: "rumble", top: 280, left: 45, height: 28, width: 35 },
-  ];
-
   const scaleCharacterArray = (charArr) => {
     const conversion = window.innerWidth / 1000;
-    return unscaledCharacters.map((character) => {
+    return props.unscaledCharacters.map((character) => {
       return {
         name: character.name,
         top: character.top * conversion,
@@ -21,20 +15,18 @@ const Image = (props) => {
     });
   };
 
-  const [size, setSize] = useState([0, 0]);
-
   const [characters, setCharacters] = useState(
     window.innerWidth < 1000
-      ? scaleCharacterArray(unscaledCharacters)
-      : unscaledCharacters
+      ? scaleCharacterArray(props.unscaledCharacters)
+      : props.unscaledCharacters
   );
 
   useLayoutEffect(() => {
     const scaleCharacters = () => {
       setCharacters(
         window.innerWidth < 1000
-          ? scaleCharacterArray(unscaledCharacters)
-          : unscaledCharacters
+          ? scaleCharacterArray(props.unscaledCharacters)
+          : props.unscaledCharacters
       );
     };
 
@@ -47,7 +39,6 @@ const Image = (props) => {
     let x = e.clientX;
     let y = e.clientY - props.headerHeight;
     if (window.innerWidth > 1000) x -= (window.innerWidth - 1000) / 2;
-    let found = false;
     characters.forEach((char) => {
       if (
         char.left < x &&
@@ -55,7 +46,7 @@ const Image = (props) => {
         char.top < y &&
         y <= char.top + char.height
       ) {
-        console.log("found " + char.name);
+        props.setCharacterFound(char.name);
       }
     });
   };
@@ -70,10 +61,8 @@ const Image = (props) => {
         }}
       >
         <div style={{ position: "relative" }}>
-          {" "}
           <img
             onClick={onClick}
-            onMouseMove={handleMove}
             src={image}
             style={{ width: "100%", maxWidth: 1000 }}
           ></img>
