@@ -78,17 +78,14 @@ const Main = () => {
           maxWidth: 1000,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <h1
-            style={{
-              height: headerHeight,
-              margin: 0,
-              paddingTop: 30,
-              boxSizing: "border-box",
-            }}
-          >
-            Find:
-          </h1>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            height: headerHeight,
+          }}
+        >
+          <h1>Find:</h1>
           <div
             name="notFoundCharacters"
             style={{ display: "flex", marginLeft: 15 }}
