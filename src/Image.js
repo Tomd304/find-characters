@@ -3,7 +3,7 @@ import { useLayoutEffect, useState } from "react";
 
 const Image = (props) => {
   const scaleCharacterArray = (charArr) => {
-    const conversion = window.innerWidth / 1000;
+    const conversion = window.innerWidth / props.maximumWidth;
     return props.unscaledCharacters.map((character) => {
       return {
         name: character.name,
@@ -16,7 +16,7 @@ const Image = (props) => {
   };
 
   const [characters, setCharacters] = useState(
-    window.innerWidth < 1000
+    window.innerWidth < props.maximumWidth
       ? scaleCharacterArray(props.unscaledCharacters)
       : props.unscaledCharacters
   );
@@ -24,7 +24,7 @@ const Image = (props) => {
   useLayoutEffect(() => {
     const scaleCharacters = () => {
       setCharacters(
-        window.innerWidth < 1000
+        window.innerWidth < props.maximumWidth
           ? scaleCharacterArray(props.unscaledCharacters)
           : props.unscaledCharacters
       );
@@ -38,7 +38,8 @@ const Image = (props) => {
     console.log(props.headerHeight);
     let x = e.clientX;
     let y = e.clientY - props.headerHeight;
-    if (window.innerWidth > 1000) x -= (window.innerWidth - 1000) / 2;
+    if (window.innerWidth > props.maximumWidth)
+      x -= (window.innerWidth - props.maximumWidth) / 2;
     characters.forEach((char) => {
       if (
         char.left < x &&
@@ -64,7 +65,7 @@ const Image = (props) => {
           <img
             onClick={onClick}
             src={image}
-            style={{ width: "100%", maxWidth: 1000 }}
+            style={{ width: "100%", maxWidth: props.maximumWidth }}
           ></img>
           <Identifiers show={false} characters={characters} />
         </div>

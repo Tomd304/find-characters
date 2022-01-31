@@ -4,36 +4,39 @@ import Image from "./Image";
 import { findByLabelText } from "@testing-library/react";
 
 const Main = () => {
+  const maximumWidth = 2000;
   const headerHeight = 100;
   const [offset, setOffset] = useState(
-    window.innerWidth > 1000 ? (window.innerWidth - 1000) / 2 : 0
+    window.innerWidth > maximumWidth
+      ? (window.innerWidth - maximumWidth) / 2
+      : 0
   );
 
   const [characters, setCharacters] = useState([
     {
       name: "Singed",
-      top: 285,
-      left: 725,
-      height: 40,
-      width: 25,
+      top: (285 * maximumWidth) / 1000,
+      left: (725 * maximumWidth) / 1000,
+      height: (40 * maximumWidth) / 1000,
+      width: (25 * maximumWidth) / 1000,
       found: false,
       color: "green",
     },
     {
       name: "Twisted Fate",
-      top: 205,
-      left: 527,
-      height: 22,
-      width: 25,
+      top: (205 * maximumWidth) / 1000,
+      left: (527 * maximumWidth) / 1000,
+      height: (22 * maximumWidth) / 1000,
+      width: (25 * maximumWidth) / 1000,
       found: false,
       color: "blue",
     },
     {
       name: "Rumble",
-      top: 280,
-      left: 45,
-      height: 28,
-      width: 35,
+      top: (280 * maximumWidth) / 1000,
+      left: (45 * maximumWidth) / 1000,
+      height: (28 * maximumWidth) / 1000,
+      width: (35 * maximumWidth) / 1000,
       found: false,
       color: "silver",
     },
@@ -55,8 +58,8 @@ const Main = () => {
 
   useLayoutEffect(() => {
     const offsetHeading = () => {
-      if (window.innerWidth > 1000) {
-        setOffset((window.innerWidth - 1000) / 2);
+      if (window.innerWidth > maximumWidth) {
+        setOffset((window.innerWidth - maximumWidth) / 2);
       }
     };
     window.addEventListener("resize", offsetHeading);
@@ -75,7 +78,7 @@ const Main = () => {
           justifyContent: "space-between",
           alignItems: "center",
           paddingLeft: offset,
-          maxWidth: 1000,
+          maxWidth: maximumWidth,
         }}
       >
         <div
@@ -120,6 +123,7 @@ const Main = () => {
         headerHeight={headerHeight}
         unscaledCharacters={characters}
         setCharacterFound={setCharacterFound}
+        maximumWidth={maximumWidth}
       />
     </div>
   );
